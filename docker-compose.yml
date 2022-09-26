@@ -15,9 +15,10 @@ services:
   nodejs:
     container_name: nodejs
     build: app
+    entrypoint: dockerize -wait tcp://mysql:3306 -timeout 50s docker-entrypoint.sh
+    command: ["node", "server.js"]
     depends_on:
-      mysql:
-        condition: service_healthy
+      - mysql
     # volumes:
     #   - .:/usr/scr
     # command: ["sleep", "365d"]
